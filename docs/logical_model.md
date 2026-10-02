@@ -37,15 +37,11 @@ Represents a legal entity that issues financial instruments.
 
 # 2. Security
 
-Represents a financial instrument that can be held in an investment portfolio.
-
-## Attributes
-
 | Attribute | Description |
 |---|---|
 | security_id | Internal unique identifier |
-| issuer_id | Issuer associated with the security |
-| instrument_type | Financial instrument classification |
+| issuer_id | Optional issuer associated with the security |
+| instrument_type_code | Classification of the financial instrument |
 | security_name | Human-readable security name |
 | currency_code | Primary denomination currency |
 | issue_date | Date the security was issued |
@@ -57,9 +53,9 @@ Represents a financial instrument that can be held in an investment portfolio.
 
 **Foreign Keys:**
 
-- `issuer_id` → Issuer
+- `issuer_id` → Issuer (optional)
+- `instrument_type_code` → Instrument Type
 - `currency_code` → Currency
-
 ---
 
 # 3. Security Identifier
@@ -117,16 +113,37 @@ Represents currencies used by the platform.
 - JPY
 
 ---
+# 5. Instrument Type
 
-# 5. Portfolio
-
-Represents a collection of investments managed together.
+Represents the controlled classification of financial instruments.
 
 ## Attributes
 
 | Attribute | Description |
 |---|---|
+| instrument_type_code | Unique instrument-type code |
+| instrument_type_name | Human-readable instrument type |
+| description | Description of the instrument category |
+
+## Key
+
+**Primary Key:** `instrument_type_code`
+
+## Examples
+
+- EQUITY
+- BOND
+- FUTURE
+- SWAP
+
+---
+
+# 6. Portfolio
+
+| Attribute | Description |
+|---|---|
 | portfolio_id | Internal unique identifier |
+| portfolio_code | Business identifier for the portfolio |
 | portfolio_name | Portfolio name |
 | base_currency_code | Portfolio reporting currency |
 | inception_date | Date the portfolio was created |
@@ -135,13 +152,13 @@ Represents a collection of investments managed together.
 
 **Primary Key:** `portfolio_id`
 
+**Business Key:** `portfolio_code`
+
 **Foreign Key:**
 
 - `base_currency_code` → Currency
 
----
-
-# 6. Position
+# 7. Position
 
 Represents a portfolio holding in a security on a specific valuation date.
 
@@ -175,7 +192,7 @@ One record represents:
 
 ---
 
-# 7. Price Source
+# 8. Price Source
 
 Represents a provider or source of market prices.
 
@@ -193,7 +210,7 @@ Represents a provider or source of market prices.
 
 ---
 
-# 8. Price
+# 9. Price
 
 Represents a market price for a security.
 

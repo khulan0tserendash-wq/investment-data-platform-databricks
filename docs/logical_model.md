@@ -218,6 +218,66 @@ Represents a market price for a security.
 - `price_source_id` → Price Source
 - `price_currency` → Currency
 
+  # Business Keys and Uniqueness Rules
+
+## Issuer
+
+Technical Primary Key:
+
+`issuer_id`
+
+Business Identifier:
+
+`lei`, when available.
+
+---
+
+## Portfolio
+
+Technical Primary Key:
+
+`portfolio_id`
+
+Business Key:
+
+`portfolio_code`
+
+---
+
+## Position
+
+Technical Primary Key:
+
+`position_id`
+
+Business uniqueness for the current model:
+
+`portfolio_id + security_id + position_date`
+
+---
+
+## Price
+
+Technical Primary Key:
+
+`price_id`
+
+Business uniqueness for the current model:
+
+`security_id + price_source_id + price_date + price_currency`
+
+---
+
+# Optionality Decisions
+
+## Security and Issuer
+
+`issuer_id` is optional.
+
+Some instrument types, such as swaps and certain derivatives, may not have a single issuer in the same sense as equities or bonds.
+
+The model will be refined further when instrument subtypes are introduced.
+
 ## Business Grain
 
 One record represents:
@@ -241,3 +301,4 @@ erDiagram
     CURRENCY ||--o{ PORTFOLIO : base_currency
     CURRENCY ||--o{ POSITION : valuation_currency
     CURRENCY ||--o{ PRICE : price_currency
+
